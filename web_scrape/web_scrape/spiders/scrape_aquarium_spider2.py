@@ -11,6 +11,8 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
 from web_scrape.items import AquariumScapeItem
+import hashlib
+from scrapy.utils.python import to_bytes
 
 class AquariumScapeSpider(CrawlSpider):
     # The name of the spider
@@ -31,7 +33,7 @@ class AquariumScapeSpider(CrawlSpider):
             follow=True,
             callback="parse_items")
     ]
-        
+    
     # Method which starts the requests by visiting all URLs specified in start_urls
     def start_requests(self):
         for url in self.start_urls:
@@ -46,7 +48,8 @@ class AquariumScapeSpider(CrawlSpider):
         src = response.css('#index_photo img::attr(src)').extract_first()
         tank_img = response.urljoin(src)
         item['image_urls'] = [tank_img]
-        item['image_name'] = ["name_test"]
+        image_guid = hashlib.sha1(to_bytes(tank_img)).hexdigest()  # change to request.url after deprecation
+        item['image_sha1'] = '%s.jpg' % (image_guid)
         item['user_name'] = response.selector.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "reeftank_panel_top", " " ))]//span/text()').extract()
         item['rank'] = response.selector.css('.margin_b+ b::text').extract()
         item['average_category_score'] = response.selector.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "clear", " " )) and (((count(preceding-sibling::*) + 1) = 7) and parent::*)]//b/text()').extract()

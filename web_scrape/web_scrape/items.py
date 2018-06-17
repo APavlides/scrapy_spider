@@ -17,8 +17,8 @@ class AquariumScapeItem(scrapy.Item):
 	plants_kept = scrapy.Field()
 	comments = scrapy.Field()
 	image_urls = scrapy.Field()
-	image_name = scrapy.Field()
 	images = scrapy.Field()
+	image_sha1 = scrapy.Field()
     
 
 

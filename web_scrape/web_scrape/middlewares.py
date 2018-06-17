@@ -101,3 +101,23 @@ class WebScrapeDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+#import base64
+#class ProxyMiddleware(object):
+#    # overwrite process request
+#    def process_request(self, request, spider):
+#        # Set the location of the proxy
+#        request.meta['proxy'] = "http://192.241.180.108:80"
+#
+#        # Use the following lines if your proxy requires authentication
+#        #proxy_user_pass = "USERNAME:PASSWORD"
+#        # setup basic authentication for the proxy
+#       # encoded_user_pass = base64.encodestring(proxy_user_pass)
+#        request.headers['Proxy-Authorization'] = 'Basic ' # + encoded_user_pass
+		
+		
+class ProxyMiddleware(object):
+    def process_request(self, request, spider):
+        request.meta['proxy'] = "https://129.213.76.9:3128"
+#        request.headers['Proxy-Authorization'] = basic_auth_header(
+#            '<PROXY_USERNAME>', '<PROXY_PASSWORD>')
