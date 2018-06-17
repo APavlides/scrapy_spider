@@ -6,6 +6,8 @@ Created on Thu Jun  7 21:15:25 2018
 """
 
 # -*- coding: utf-8 -*-
+
+# run: scrapy runspider scrape_aquarium_spider2.py -o scrape_aquarium_spider.csv
 from __future__ import absolute_import
 import scrapy
 from scrapy.linkextractors import LinkExtractor
@@ -21,8 +23,9 @@ class AquariumScapeSpider(CrawlSpider):
     # The domains that are allowed (links to other domains are skipped)
     allowed_domains = ["www.ratemyfishtank.com"]
 
-    # The URLs to start with
-    start_urls = ['https://www.ratemyfishtank.com/photos-planted-tanks/order/page/1']
+    # The URLs to start with 
+    a = list(range(1,246))
+    start_urls = ['https://www.ratemyfishtank.com/photos-planted-tanks/order/page/{0}'.format(s) for s in a]  
 
     # This spider has one rule: extract all (unique and canonicalized) links, follow them and parse them using the parse_items method
     rules = [
