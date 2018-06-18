@@ -24,8 +24,7 @@ class AquariumScapeSpider(CrawlSpider):
     allowed_domains = ["www.ratemyfishtank.com"]
 
     # The URLs to start with 
-    a = list(range(1,246))
-    start_urls = ['https://www.ratemyfishtank.com/photos-planted-tanks/order/page/{0}'.format(s) for s in a]  
+    start_urls =   ['https://www.ratemyfishtank.com/photos-planted-tanks/order/page/{0}'.format(s) for s in list(range(1,246))]  #max is 246
 
     # This spider has one rule: extract all (unique and canonicalized) links, follow them and parse them using the parse_items method
     rules = [
